@@ -14,7 +14,7 @@
 		855B04AB187E2726008EDE5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B04AA187E2726008EDE5D /* main.m */; };
 		855B04AF187E2726008EDE5D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B04AE187E2726008EDE5D /* AppDelegate.m */; };
 		855B04B2187E2726008EDE5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 855B04B0187E2726008EDE5D /* Main.storyboard */; };
-		855B04B5187E2726008EDE5D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B04B4187E2726008EDE5D /* ViewController.m */; };
+		855B04B5187E2726008EDE5D /* CrazyDragController.m in Sources */ = {isa = PBXBuildFile; fileRef = 855B04B4187E2726008EDE5D /* CrazyDragController.m */; };
 		855B04B7187E2726008EDE5D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 855B04B6187E2726008EDE5D /* Images.xcassets */; };
 		855B04BE187E2727008EDE5D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855B04BD187E2727008EDE5D /* XCTest.framework */; };
 		855B04BF187E2727008EDE5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 855B049E187E2725008EDE5D /* Foundation.framework */; };
@@ -45,8 +45,8 @@
 		855B04AD187E2726008EDE5D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		855B04AE187E2726008EDE5D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		855B04B1187E2726008EDE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		855B04B3187E2726008EDE5D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		855B04B4187E2726008EDE5D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		855B04B3187E2726008EDE5D /* CrazyDragController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrazyDragController.h; sourceTree = "<group>"; };
+		855B04B4187E2726008EDE5D /* CrazyDragController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrazyDragController.m; sourceTree = "<group>"; };
 		855B04B6187E2726008EDE5D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		855B04BC187E2727008EDE5D /* hitmeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hitmeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		855B04BD187E2727008EDE5D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -115,8 +115,8 @@
 				855B04AD187E2726008EDE5D /* AppDelegate.h */,
 				855B04AE187E2726008EDE5D /* AppDelegate.m */,
 				855B04B0187E2726008EDE5D /* Main.storyboard */,
-				855B04B3187E2726008EDE5D /* ViewController.h */,
-				855B04B4187E2726008EDE5D /* ViewController.m */,
+				855B04B3187E2726008EDE5D /* CrazyDragController.h */,
+				855B04B4187E2726008EDE5D /* CrazyDragController.m */,
 				855B04B6187E2726008EDE5D /* Images.xcassets */,
 				855B04A5187E2726008EDE5D /* Supporting Files */,
 			);
@@ -249,7 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				855B04B5187E2726008EDE5D /* ViewController.m in Sources */,
+				855B04B5187E2726008EDE5D /* CrazyDragController.m in Sources */,
 				855B04AF187E2726008EDE5D /* AppDelegate.m in Sources */,
 				855B04AB187E2726008EDE5D /* main.m in Sources */,
 			);
@@ -460,6 +460,7 @@
 				855B04CF187E2727008EDE5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		855B04D0187E2727008EDE5D /* Build configuration list for PBXNativeTarget "hitmeTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +469,7 @@
 				855B04D2187E2727008EDE5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

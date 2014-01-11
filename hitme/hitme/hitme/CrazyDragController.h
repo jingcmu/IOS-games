@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CrazyDragController.h
 //  hitme
 //
 //  Created by 陈 靖 on 14-1-8.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface CrazyDragController : UIViewController
 
 @end
