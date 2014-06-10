@@ -22,8 +22,6 @@
     
     if (self) {
         _timer = [[CCTimer alloc] init];
-        //_grid = [[Grid alloc] init];
-        //[_grid onEnter];
     }
     
     return self;
@@ -32,7 +30,7 @@
 - (void)play
 {
     //this tells the game to call a method called 'step' every half second.
-    [self schedule:@selector(step) interval:3.0f];
+    [self schedule:@selector(step) interval:1.0f];
 }
 
 - (void)pause
