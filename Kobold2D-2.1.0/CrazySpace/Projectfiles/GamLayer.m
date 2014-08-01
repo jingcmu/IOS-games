@@ -1,6 +1,6 @@
 //
 //  GamLayer.m
-//  DoodleDrop
+//  CrazySpace
 //
 //  Created by Jing on 7/2/14.
 //  Copyright 2014 __MyCompanyName__. All rights reserved.
@@ -13,9 +13,9 @@
 
 +(id) scene
 {
-    CCScene *scene = [CCScene node]; //创建一个场景
-    CCLayer *layer = [GamLayer node]; //创建层
-    [scene addChild:layer]; //添加层到场景
+    CCScene *scene = [CCScene node]; //Create a scene
+    CCLayer *layer = [GamLayer node]; //Create a layer
+    [scene addChild:layer]; //add layer to the scene
     return scene;
 }
 
@@ -42,7 +42,6 @@
         CGSize screenSize = [CCDirector sharedDirector].winSize;
         //float imageHeight = player.texture.contentSize.height;
         
-        //生命值
         HealthPoint = 3;
         
         for(int i=0; i<HealthPoint; i++)
@@ -51,7 +50,7 @@
             CGSize size = planet.texture.contentSize;
             planet.position = CGPointMake(screenSize.width - size.width * 0.5f - size.width * i * 1.2f, screenSize.height - size.height);
             
-            //把蜘蛛精灵们添加到当前layer
+            //add sprite planet to current layer
             [self addChild:planet z:0 tag:4+i];
         }
         
@@ -62,23 +61,23 @@
         player = [CCSprite spriteWithFile:@"planet.png"];
         [self addChild:player z:0 tag:1];
         
-        player.position = CGPointMake(screenSize.width/2, screenSize.height/2); //放到屏幕底部中间的位置
+        player.position = CGPointMake(screenSize.width/2, screenSize.height/2); //place player to the middle of the screen
         
         //schedules the -(void)update:(ccTime)delta method to be called every frame
         [self scheduleUpdate];
         
-        //初始化蜘蛛精灵
+        //Init bullets(which are suns)
         [self initbullets];
         
-        //添加得分标签
+        //create the label for score
         scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:@"Arial" fontSize:48];
-        //把标签放到正上方
+        //add label to the top middle of the screen
         scoreLabel.position = CGPointMake(screenSize.width/2, screenSize.height);
         
-        //调整标签的anchorPoint
+        //change the anchorPoint for score label
         scoreLabel.anchorPoint = CGPointMake(0.5f, 1.0f);
         
-        //添加标签到当前layer，但是z设为-1，在所有东西下面
+        //add label to current layer, set z to -1
         [self addChild:scoreLabel z:-1];
         
         //播放背景音乐
@@ -514,7 +513,7 @@
     }
 }
 
--(void) stopAndShowMessage:(NSString *)message withLevel:(NSString *)level
+-(void) stopAndShowMessage:(NSString *)message withLevel:(NSString *)level1
 {
     // Re-enable screensaver, to prevent battery drain in case the user puts the device aside without turning it off.
 	[self setScreenSaverEnabled:YES];
@@ -569,7 +568,7 @@
 	[gameOver runAction:repeatJump];
 	
 	// touch to continue label
-	CCLabelTTF* touch = [CCLabelTTF labelWithString:level fontName:@"Arial" fontSize:24];
+	CCLabelTTF* touch = [CCLabelTTF labelWithString:level1 fontName:@"Arial" fontSize:24];
 	touch.position = CGPointMake(screenSize.width / 2, screenSize.height / 4);
 	[self addChild:touch z:100 tag:101];
 	
