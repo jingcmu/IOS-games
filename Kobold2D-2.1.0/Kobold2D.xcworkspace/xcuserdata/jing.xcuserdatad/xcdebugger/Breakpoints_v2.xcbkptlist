@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CrazySpace/Projectfiles/GamLayer.m"
-            timestampString = "427407097.013868"
+            timestampString = "428637450.090806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-addRestartButton"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "-updateAcceleration:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

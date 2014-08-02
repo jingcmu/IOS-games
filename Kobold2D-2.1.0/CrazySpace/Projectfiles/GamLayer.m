@@ -80,14 +80,14 @@
         //add label to current layer, set z to -1
         [self addChild:scoreLabel z:-1];
         
-        //播放背景音乐
+        //play background music
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"blues.mp3" loop:YES];
         [[SimpleAudioEngine sharedEngine] playEffect:@"alien-sfx.caf"];
         
-        //设置随机数种子为时间，不然每次蜘蛛都会按照同一序列下落
+        //set a seed for the random generator
 		//srandom((unsigned int)time(NULL));
         
-        //先进入GameOver画面
+        //first enter GameOver scene
         bulletMoveDuration = 4.0f;
         isCollision = true;
         [self stopAndShowMessage:@"CrazySpace.." withLevel:@"Touch to play Level-1"];
@@ -191,7 +191,7 @@
     }
     [scoreLabel setString:[NSString stringWithFormat:@"%i", score]];
     
-    //判断是否暂停或重新开始
+    //pause or restart
     if(pauseButton.active)
     {
         CCLOG(@"pause!!");
@@ -209,7 +209,7 @@
 -(void) onEnter
 {
     [super onEnter];
-    // 禁止屏幕变暗
+    // forbid screen to close
 	[self setScreenSaverEnabled:NO];
     
     cmManager = [[CMMotionManager alloc]init];
@@ -226,14 +226,19 @@
 {
     CMAccelerometerData *accelData = cmManager.accelerometerData;
     double x = accelData.acceleration.x;
-    double y = accelData.acceleration.y;
+    double y = accelData.acceleration.y + 0.5;
+    
+    printf("x = %f\n", x);
+    printf("y = %f\n", y);
+    
+    
 //    double z = accelData.acceleration.z;
     
-    //控制减速快慢（lower = quicker to change direction）
+    //control the change rate of the speed（lower = quicker to change direction）
     float deceleration = 0.3f;
-    //灵敏度（higher = more sensitive）
+    //sensitivity（higher = more sensitive）
     float sensitivity = 14.0f;
-    //最大速度
+    //highest speed
     float maxVelocity = 200;
     
     playerVelocity.x = playerVelocity.x * deceleration + x * sensitivity;
@@ -262,28 +267,28 @@
 {
     CGSize screenSize = [CCDirector sharedDirector].winSize;
     
-    //用一个临时蜘蛛精灵得到图像大小
+    //temporary sprite used to get the size
     CCSprite *tempbullet = [CCSprite spriteWithFile:@"bullet.png"];
     
-    //得到精灵的宽度
+    //get the width of the sprite
     float imageWidth = tempbullet.texture.contentSize.width;
     
-    //算出最多需要多少个蜘蛛精灵
+    //calculate how many sprite is needed
     int numbullets = screenSize.width / imageWidth;
     
-    //分配这么多个蜘蛛精灵
+    //allocate sprites
     bullets = [NSMutableArray arrayWithCapacity:numbullets];
     for(int i=0; i<numbullets; i++)
     {
         CCSprite *bullet = [CCSprite spriteWithFile:@"bullet.png"];
-        //把蜘蛛精灵们添加到当前layer
+        //add sprite to current layer
         [self addChild:bullet z:0 tag:2];
         
-        //把蜘蛛精灵们添加到数组
+        //add the sprite to the array
         [bullets addObject:bullet];
     }
     
-    //重置蜘蛛精灵
+    //reset sprite
     [self resetbullets];
 }
 
@@ -291,24 +296,24 @@
 {
     CGSize screenSize =[CCDirector sharedDirector].winSize;
     
-    //随便找一个蜘蛛精灵，以得到其大小
+    //get an arbitery sprite to get the size
     CCSprite *tempbullet =[bullets lastObject];
     CGSize size = tempbullet.texture.contentSize;
     int numbullets = [bullets count];
     
     for(int i=0; i<numbullets; i++)
     {
-        //把每个蜘蛛精灵放到屏幕外的指定位置
+        //place the sprite to the position outside the screen
         CCSprite *bullet = [bullets objectAtIndex:i];
         bullet.position = CGPointMake(size.width * i + size.width * 0.5f, screenSize.height + size.height);
         
         [bullet stopAllActions];
     }
     
-    //每0.7秒调用一次bulletUpdate
+    //call bulletUpdate every 0.7 seconds
     [self schedule:@selector(bulletsUpdate:) interval:(0.7f/level)];
     
-    //重置移动蜘蛛计数和移动耗时
+    //reset the counter for the moving sprite
     numbulletMoved = 0;
 }
 
@@ -318,36 +323,36 @@
     {
         bulletMoveDuration = 2.0f;
         level++;
-        [self stopAndShowMessage:@"Passed!" withLevel:@"Touch to play Level-2"];
+        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-2"];
     }
     else if(score == 30 && level == 2) //level-3
     {
         bulletMoveDuration = 1.5f;
         level++;
-        [self stopAndShowMessage:@"Passed!" withLevel:@"Touch to play Level-3"];
+        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-3"];
     }
     else if(score == 45 && level == 3) //level-4
     {
         bulletMoveDuration = 4.0f;
         level++;
-        [self stopAndShowMessage:@"Passed!" withLevel:@"Touch to play Level-4"];
+        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-4"];
     }
     else if(score == 60 && level == 4) //level-5
     {
         bulletMoveDuration = 2.0f;
         level++;
-        [self stopAndShowMessage:@"Passed!" withLevel:@"Touch to play Level-5"];
+        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-5"];
     }
-    //随机找一个当前静止的蜘蛛精灵
+    //get an arbitery still sprite
     for(int i=0; i<10; i++)
     {
         int randombulletIndex = CCRANDOM_0_1() * bullets.count;
         CCSprite *bullet = [bullets objectAtIndex:randombulletIndex];
         
-        // 正在运行的动作总数为0代表静止
+        //judge whether it is still
         if(bullet.numberOfRunningActions == 0)
         {
-            // 可以让其下落
+            //move the sprite
             [self runbulletMoveSequence:bullet];
             break;
         }
@@ -357,14 +362,14 @@
 
 -(void) runbulletMoveSequence:(CCSprite *)bullet
 {
-    // 增加蜘蛛计数
+    // the count increase for the moving sprite
     numbulletMoved++;
     
-    // 移动到屏幕下方看不见的位置
+    // move to the position that below the screen
     CGPoint belowScreenPosition = CGPointMake(bullet.position.x, -bullet.texture.contentSize.height);
-    // MoveTo动作
+    // MoveTo action
     CCMoveTo *move = [CCMoveTo actionWithDuration:bulletMoveDuration position:belowScreenPosition];
-    // CallBlock动作
+    // CallBlock action
     CCCallBlock *callDidDrop = [CCCallBlock actionWithBlock:^void(){
         CGPoint pos = bullet.position;
         CGSize screenSize = [CCDirector sharedDirector].winSize;
@@ -378,7 +383,7 @@
 
 -(void) checkForCollision
 {
-    // 假设蜘蛛和玩家都是矩形
+    // assume all sprites are square
     float playerImageSize = player.texture.contentSize.width;
     CCSprite *bullet = [bullets lastObject];
     float bulletImageSize = bullet.texture.contentSize.width;
@@ -396,22 +401,21 @@
         
         if(bullet.numberOfRunningActions == 0)
         {
-            //跳过静止的蜘蛛精灵
+            // if the sprite is still, continue
             continue;
         }
         
-        //计算player和bullet的距离
+        //cacl the distance between player and other bsprites
         float actualDistance = ccpDistance(player.position, bullet.position);
         
-        //判断是否碰撞
+        //crash detect
         if(actualDistance < maxCollisionDistance)
         {
             [[SimpleAudioEngine sharedEngine] playEffect:@"alien-sfx.caf"];
             
-            // 结束游戏
             isCollision = true;            
             
-            //如果生命值为0则结束游戏
+            //game over if HP is 0
             if(HealthPoint == 0)
             {
                 isRestart = true;
@@ -430,7 +434,7 @@
 
 -(void) resetGame
 {
-    // 禁止屏幕变暗
+    // forbid the screen to be closed
 	[self setScreenSaverEnabled:NO];
     self.touchEnabled = NO;
     
@@ -451,7 +455,7 @@
 
 -(void) pauseGame
 {
-    // 禁止屏幕变暗
+    // forbid the screen to be closed
 	[self setScreenSaverEnabled:NO];
     self.touchEnabled = NO;
     
@@ -468,7 +472,7 @@
 }
 
 #pragma mark Reset Game
-// 禁止屏幕变暗
+// forbid the screen to be closed
 -(void) setScreenSaverEnabled:(bool)enabled
 {
 #if KK_PLATFORM_IOS
@@ -508,12 +512,12 @@
         CGSize size = planet.texture.contentSize;
         planet.position = CGPointMake(screenSize.width - size.width * 0.5f - size.width * i * 1.2f, screenSize.height - size.height);
         
-        //把蜘蛛精灵们添加到当前layer
+        //add sprite to current layer
         [self addChild:planet z:0 tag:4+i];
     }
 }
 
--(void) stopAndShowMessage:(NSString *)message withLevel:(NSString *)level1
+-(void) stopAndShowMessage:(NSString *)message withLevel:(NSString *)level
 {
     // Re-enable screensaver, to prevent battery drain in case the user puts the device aside without turning it off.
 	[self setScreenSaverEnabled:YES];
@@ -568,7 +572,7 @@
 	[gameOver runAction:repeatJump];
 	
 	// touch to continue label
-	CCLabelTTF* touch = [CCLabelTTF labelWithString:level1 fontName:@"Arial" fontSize:24];
+	CCLabelTTF* touch = [CCLabelTTF labelWithString:level fontName:@"Arial" fontSize:24];
 	touch.position = CGPointMake(screenSize.width / 2, screenSize.height / 4);
 	[self addChild:touch z:100 tag:101];
 	
