@@ -70,15 +70,19 @@
         [self initbullets];
         
         //create the label for score
-        scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:@"Arial" fontSize:48];
+        label = [CCLabelTTF labelWithString:@"Score:" fontName:@"Arial" fontSize:24];
+        scoreLabel = [CCLabelTTF labelWithString:@"0" fontName:@"Arial" fontSize:24];
         //add label to the top middle of the screen
-        scoreLabel.position = CGPointMake(screenSize.width/2, screenSize.height);
+        label.position = CGPointMake(screenSize.width/2-120, screenSize.height-10);
+        scoreLabel.position = CGPointMake(screenSize.width/2-40, screenSize.height-10);
         
         //change the anchorPoint for score label
         scoreLabel.anchorPoint = CGPointMake(0.5f, 1.0f);
+        label.anchorPoint = CGPointMake(0.5f, 1.0f);
         
         //add label to current layer, set z to -1
         [self addChild:scoreLabel z:-1];
+        [self addChild:label z:-1];
         
         //play background music
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"blues.mp3" loop:YES];
@@ -90,8 +94,9 @@
         //first enter GameOver scene
         bulletMoveDuration = 4.0f;
         isCollision = true;
-        [self stopAndShowMessage:@"CrazySpace.." withLevel:@"Touch to play Level-1"];
+        [self stopAndShowMessage:@"CrazySpace.." withLevel:@"Tilt your phone to play"];
 		//[self showGameOver];
+        labelScale = false;
     }
     
     return self;
@@ -185,9 +190,15 @@
     //assigning the modified position back
     player.position = pos;
     [self checkForCollision];
-    if([CCDirector sharedDirector].totalFrames % 60 == 0)
+    if([CCDirector sharedDirector].totalFrames % 6 == 0)
     {
         score += 1;
+        if(labelScale == true)
+        {
+            labelScale = false;
+            [scoreLabel setScaleX:1.0];
+            [scoreLabel setScaleY:1.0];
+        }
     }
     [scoreLabel setString:[NSString stringWithFormat:@"%i", score]];
     
@@ -319,29 +330,29 @@
 
 -(void) bulletsUpdate:(ccTime)delta
 {
-    if(score == 15 && level == 1)  //level-2
+    if(score >= 300 && level == 1)  //level-2
     {
         bulletMoveDuration = 2.0f;
         level++;
-        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-2"];
+        [self stopAndShowMessage:@"Good job!" withLevel:@"Touch to play next level"];
     }
-    else if(score == 30 && level == 2) //level-3
+    else if(score >= 600 && level == 2) //level-3
     {
         bulletMoveDuration = 1.5f;
         level++;
-        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-3"];
+        [self stopAndShowMessage:@"Good job!" withLevel:@"Touch to play next level"];
     }
-    else if(score == 45 && level == 3) //level-4
+    else if(score >= 1200 && level == 3) //level-4
     {
         bulletMoveDuration = 4.0f;
         level++;
-        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-4"];
+        [self stopAndShowMessage:@"Good job!" withLevel:@"Touch to play next level"];
     }
-    else if(score == 60 && level == 4) //level-5
+    else if(score >= 2000 && level == 4) //level-5
     {
         bulletMoveDuration = 2.0f;
         level++;
-        [self stopAndShowMessage:@"Win!" withLevel:@"Touch to play Level-5"];
+        [self stopAndShowMessage:@"Good job!" withLevel:@"Touch to play next level"];
     }
     //get an arbitery still sprite
     for(int i=0; i<10; i++)
@@ -416,18 +427,36 @@
             isCollision = true;            
             
             //game over if HP is 0
-            if(HealthPoint == 0)
+            if(HealthPoint == 1)
             {
                 isRestart = true;
                 bulletMoveDuration = 4.0f;
-                [self stopAndShowMessage:@"CrazySpace!" withLevel:@"Touch to play Level-1"];
+                [self stopAndShowMessage:@"You lose!" withLevel:@"Tilt your phone to play"];
             }
             else
             {
                 HealthPoint--;
-                [self stopAndShowMessage:@"You died!" withLevel:@"Touch to continue!"];
+                NSString *h = [NSString stringWithFormat:@"%d", HealthPoint];
+                NSString *m = NULL;
+                if(HealthPoint == 1) {
+                    m = [h stringByAppendingString:@" life left!" ];
+                }
+                else {
+                    m = [h stringByAppendingString:@" lives left!" ];
+                }
+                [self stopAndShowMessage:m withLevel:@"Touch to continue!"];
             }
             break;
+        }
+        else if(actualDistance < maxCollisionDistance + 10)
+        {
+            score += 10;
+            if(labelScale == false)
+            {
+                labelScale = true;
+                [scoreLabel setScaleX:2.0];
+                [scoreLabel setScaleY:2.0];
+            }
         }
     }
 }

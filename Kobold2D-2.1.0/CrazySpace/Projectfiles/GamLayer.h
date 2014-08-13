@@ -24,12 +24,14 @@
     BOOL isCollision;
     BOOL isRestart;
     int level;
-    //基于接口编程
+    //label for score
+    CCNode < CCLabelProtocol > *label;
     CCNode < CCLabelProtocol > *scoreLabel;
     
     SneakyButton *pauseButton;
     SneakyButton *restartButton;
     int HealthPoint;
+    BOOL labelScale;
 }
 
 +(id) scene;
